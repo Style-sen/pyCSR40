@@ -1,0 +1,3 @@
+[submodule "WinUsbPy"]
+	path = WinUsbPy
+	url = git@github.com:Style-sen/WinUsbPy.git
