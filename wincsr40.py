@@ -137,8 +137,8 @@ if result > 0:
         time.sleep(0.380)
         api.write(0x02, tx12)
                 
-	else:
+    else:
         print("PL2303 could not be init")
 
 else:
-	print("No Usb devices connected")
+    print("No Usb devices connected")
