@@ -26,8 +26,8 @@ pkt9 = UsbSetupPacket(0x40, 0x01, 0x0000, 0x01, 0x00)
 pkt10 = UsbSetupPacket(0x40, 0x01, 0x0001, 0x00, 0x00)
 pkt11 = UsbSetupPacket(0x40, 0x01, 0x0002, 0x44, 0x00)
 pkt12 = UsbSetupPacket(0x00, 0x01, 0x0001, 0x00, 0x00)
-
-pkt13 = UsbSetupPacket(0x21, 0x20, 0x0000, 0x00, 0x07)
+#CSR
+pkt13 = UsbSetupPacket(0x21, 0x20, 0x0000, 0x00, 0x05)
 pkt14 = UsbSetupPacket(0x40, 0x01, 0x0505, 0x1311, 0x00)
 pkt15 = UsbSetupPacket(0x21, 0x22, 0x0001, 0x00, 0x00)
 pkt16 = UsbSetupPacket(0x40, 0x01, 0x0505, 0x1311, 0x00)
@@ -37,7 +37,10 @@ pkt19 = UsbSetupPacket(0xc0, 0x01, 0x0081, 0x00, 0x02)
 pkt20 = UsbSetupPacket(0x40, 0x01, 0x0000, 0x01, 0x00)
 
 """ USB Data """
-hello = b"\x20\x0c\x02\x01\x01"
+OCF_LE_SET_SCAN_ENABLE = b"\x00\x0c\x02\x01\x01"
+LE_SET_SCAN_ENABLE_CMD = b"\x20\x0c\x02\x01\x01"
+OCF_LE_SET_SCAN_DISABLE = b"\x00\x0c\x02\x00\x01"
+LE_SET_SCAN_DISABLE_CMD = b"\x20\x0c\x02\x00\x01"
 header = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x08\x00\x00\x01\x08\x01\x00\x00\x08\x01\x00\x00\x08\x01\x00\x00\x08\x01\x00\x00\x08\x01\x00\x00\x08\x01\x00\x00\x08\x01\x00\x00"
 tx1 = b"\x18"
 tx2 = b"\x08"
@@ -100,7 +103,7 @@ if result > 0:
         #api.control_transfer(pkt10, buff=None)
         #api.control_transfer(pkt11, buff=None)
         #api.control_transfer(pkt12, buff=None)
-        #api.control_transfer(pkt13, buff=[0xc0, 0x12, 0x00, 0x00, 0x00, 0x00, 0x08])
+        api.control_transfer(pkt13, buff=[0x20, 0x0c, 0x02, 0x01, 0x01])
         #api.control_transfer(pkt14, buff=None)
         #api.control_transfer(pkt15, buff=None)
         #api.control_transfer(pkt16, buff=None)
@@ -109,13 +112,12 @@ if result > 0:
         #api.control_transfer(pkt19, buff=[0,0])
         #api.control_transfer(pkt20, buff=None)
         print("start")
-        api.write(0x00, hello)//2,129,130
         #time.sleep(0.045)
         while True:
             event_data = ((api.read(0x81, 5)))
             for i in range(len(event_data)):
                 print(event_data[i])
-            normal_data = ((api.read(0x81, 5)))
+            normal_data = ((api.read(0x82, 5)))
             for i in range(len(normal_data)):
                 print(normal_data[i])
 
