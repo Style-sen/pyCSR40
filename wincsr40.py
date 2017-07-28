@@ -35,7 +35,7 @@ pkt17 = UsbSetupPacket(0x21, 0x22, 0x0001, 0x00, 0x00)
 pkt18 = UsbSetupPacket(0xc0, 0x01, 0x0080, 0x00, 0x02)
 pkt19 = UsbSetupPacket(0xc0, 0x01, 0x0081, 0x00, 0x02)
 pkt20 = UsbSetupPacket(0x40, 0x01, 0x0000, 0x01, 0x00)
-
+pkt21 = UsbSetupPacket(0x21, 0x20, 0x0000, 0x00, 0x03)
 """ USB Data """
 OCF_LE_SET_SCAN_ENABLE = b"\x00\x0c\x02\x01\x01"
 LE_SET_SCAN_ENABLE_CMD = b"\x20\x0c\x02\x01\x01"
@@ -103,6 +103,10 @@ if result > 0:
         #api.control_transfer(pkt10, buff=None)
         #api.control_transfer(pkt11, buff=None)
         #api.control_transfer(pkt12, buff=None)
+        #reset
+        api.control_transfer(pkt21, buff=[0x0c, 0x03, 0x00])
+        time.sleep(0.380)
+        #enable scan
         api.control_transfer(pkt13, buff=[0x20, 0x0c, 0x02, 0x01, 0x01])
         #api.control_transfer(pkt14, buff=None)
         #api.control_transfer(pkt15, buff=None)
