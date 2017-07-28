@@ -36,6 +36,7 @@ pkt18 = UsbSetupPacket(0xc0, 0x01, 0x0080, 0x00, 0x02)
 pkt19 = UsbSetupPacket(0xc0, 0x01, 0x0081, 0x00, 0x02)
 pkt20 = UsbSetupPacket(0x40, 0x01, 0x0000, 0x01, 0x00)
 pkt21 = UsbSetupPacket(0x21, 0x00, 0x0000, 0x00, 0x03)
+pkt22 = UsbSetupPacket(0x21, 0x00, 0x0000, 0x00, 0x03)
 """ USB Data """
 OCF_LE_SET_SCAN_ENABLE = b"\x00\x0c\x02\x01\x01"
 LE_SET_SCAN_ENABLE_CMD = b"\x20\x0c\x02\x01\x01"
@@ -108,7 +109,17 @@ if result > 0:
         event_data = ((api.read(0x81, 64)))
         for i in range(len(event_data)):
             print(b'81:' + event_data[i])
-        time.sleep(0.380)
+        time.sleep(2)
+        #disable scan
+        api.control_transfer(pkt13, buff=[0x20, 0x0c, 0x02, 0x00, 0x01])
+        event_data = ((api.read(0x81, 64)))
+        for i in range(len(event_data)):
+            print(b'81:' + event_data[i])
+        #disable scan
+        api.control_transfer(pkt13, buff=[0x20, 0x0b, 0x07, 0x01, 0x00 ,0x10, 0x00, 0x10, 0x00, 0x00])
+        event_data = ((api.read(0x81, 64)))
+        for i in range(len(event_data)):
+            print(b'81:' + event_data[i])
         #enable scan
         api.control_transfer(pkt13, buff=[0x20, 0x0c, 0x02, 0x01, 0x01])
         event_data = ((api.read(0x81, 64)))
