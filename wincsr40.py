@@ -114,12 +114,12 @@ if result > 0:
         print("start")
         #time.sleep(0.045)
         while True:
-            event_data = ((api.read(0x81, 5)))
+            event_data = ((api.read(0x81, 64)))
             for i in range(len(event_data)):
-                print(event_data[i])
-            normal_data = ((api.read(0x82, 5)))
+                print(b'81:' + event_data[i])
+            normal_data = ((api.read(0x82, 64)))
             for i in range(len(normal_data)):
-                print(normal_data[i])
+                print(b'82:' + normal_data[i])
 
         print("end")
         #api.write(0x02, header)
