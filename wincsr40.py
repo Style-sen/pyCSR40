@@ -105,9 +105,15 @@ if result > 0:
         #api.control_transfer(pkt12, buff=None)
         #reset
         api.control_transfer(pkt21, buff=[0x0c, 0x03, 0x00])
+        event_data = ((api.read(0x81, 64)))
+        for i in range(len(event_data)):
+            print(b'81:' + event_data[i])
         time.sleep(0.380)
         #enable scan
         api.control_transfer(pkt13, buff=[0x20, 0x0c, 0x02, 0x01, 0x01])
+        event_data = ((api.read(0x81, 64)))
+        for i in range(len(event_data)):
+            print(b'81:' + event_data[i])
         #api.control_transfer(pkt14, buff=None)
         #api.control_transfer(pkt15, buff=None)
         #api.control_transfer(pkt16, buff=None)
@@ -115,17 +121,17 @@ if result > 0:
         #api.control_transfer(pkt18, buff=[0,0])
         #api.control_transfer(pkt19, buff=[0,0])
         #api.control_transfer(pkt20, buff=None)
-        print("start")
+        #print("start")
         #time.sleep(0.045)
-        while True:
-            event_data = ((api.read(0x81, 64)))
-            for i in range(len(event_data)):
-                print(b'81:' + event_data[i])
-            normal_data = ((api.read(0x82, 64)))
-            for i in range(len(normal_data)):
-                print(b'82:' + normal_data[i])
+        #while True:
+        #    event_data = ((api.read(0x81, 64)))
+        #    for i in range(len(event_data)):
+        #        print(b'81:' + event_data[i])
+        #    normal_data = ((api.read(0x82, 64)))
+        #    for i in range(len(normal_data)):
+        #        print(b'82:' + normal_data[i])
 
-        print("end")
+        #print("end")
         #api.write(0x02, header)
         #time.sleep(0.380)
         #print(api.read(0x02, 5))
